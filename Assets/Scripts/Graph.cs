@@ -29,7 +29,7 @@ public class Graph : MonoBehaviour
         float t = Time.time * speed;
         GraphFunction f = functions[(int)function];
         float step = 2f / resolution;
-        for (int i = 0, z = 0; i < resolution; z++)
+        for (int i = 0, z = 0; z < resolution; z++)
         {
             float v = (z + 0.5f) * step - 1f;
             for (int x = 0; x < resolution; x++, i++)
@@ -106,9 +106,32 @@ public class Graph : MonoBehaviour
         return p;
     }
 
+    static Vector3 Sphere(float u, float v, float t)
+    {
+        Vector3 p;
+        float r = 0.8f + Mathf.Sin(pie * (0.6f * u + t)) * 0.1f;
+        r += Mathf.Sin(pie * (4f * v * +t)) * 0.1f;
+        float s = r * Mathf.Cos(pie * 0.5f * v);
+        p.x = s * Mathf.Sin(pie * u);
+        p.y = r * Mathf.Sin(pie * 0.5f * v);
+        p.z = s * Mathf.Cos(pie * u);
+        return p;
+    }
+
+    static Vector3 Torus(float u, float v, float t)
+    {
+        Vector3 p;
+        float r1 = 0.65f + Mathf.Sin(pie * (6f * u + t)) * 0.1f;
+        float r2 = 0.2f + Mathf.Sin(pie * (4f * v + t)) * 0.05f; ;
+        float s = r2 * Mathf.Cos(pie * v) + r1;
+        p.x = s * Mathf.Sin(pie * u);
+        p.y = r2 * Mathf.Sin(pie * v);
+        p.z = s * Mathf.Cos(pie * u);
+        return p;
+    }
+
     static GraphFunction[] functions =
     {
-        SineFunction, Sine2DFunction, MultiSineFunction, MultiSine2DFunction, Ripple, Cylinder
+        SineFunction, Sine2DFunction, MultiSineFunction, MultiSine2DFunction, Ripple, Cylinder, Sphere, Torus
     };
-
 }
